@@ -6,24 +6,22 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import com.blogpessoal.Turma34.modelos.UsuarioModelo;
+import com.blogpessoal.Turma34.servicos.UsuarioServicos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.blogpessoal.Turma34.repositorios.UsuarioRepositorio;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
+@CrossOrigin("*")
 public class UsuarioControlador {
 
 	private @Autowired UsuarioRepositorio repositorio;
+	private @Autowired UsuarioServicos servicos;
 
 	@GetMapping("/todos")
 	public ResponseEntity<List<UsuarioModelo>> pegarTodos() {
@@ -48,8 +46,9 @@ public class UsuarioControlador {
 	}
 
 	@PostMapping("/salvar")
-	public ResponseEntity<UsuarioModelo> salvar(@Valid @RequestBody UsuarioModelo novoUsuario) {
-		return ResponseEntity.status(201).body(repositorio.save(novoUsuario));
+	public ResponseEntity<?> salvar(@Valid @RequestBody UsuarioModelo novoUsuario) {
+		return servicos.cadastrarUsuario(novoUsuario).map(resp -> ResponseEntity.status(201).body(resp))
+				.orElse(ResponseEntity.status(400).build());
 	}
 
 	@PutMapping("/atualizar")
