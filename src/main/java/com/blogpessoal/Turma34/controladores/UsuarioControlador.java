@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.blogpessoal.Turma34.modelos.Usuario;
+import com.blogpessoal.Turma34.modelos.UsuarioModel;
+import com.blogpessoal.Turma34.modelos.UsuarioModel;
 import com.blogpessoal.Turma34.repositorios.UsuarioRepositorio;
 
 @RestController
@@ -27,8 +28,8 @@ public class UsuarioControlador {
 	private @Autowired UsuarioRepositorio repositorio;
 
 	@GetMapping("/todos")
-	public ResponseEntity<List<Usuario>> pegarTodos() {
-		List<Usuario> objetoLista = repositorio.findAll();
+	public ResponseEntity<List<UsuarioModel>> pegarTodos() {
+		List<UsuarioModel> objetoLista = repositorio.findAll();
 
 		if (objetoLista.isEmpty()) {
 			return ResponseEntity.status(204).build();
@@ -38,8 +39,8 @@ public class UsuarioControlador {
 	}
 
 	@GetMapping("/{id_usuario}")
-	public ResponseEntity<Usuario> pegarId(@PathVariable(value = "id_usuario") Long idUsuario) {
-		Optional<Usuario> objetoOptional = repositorio.findById(idUsuario);
+	public ResponseEntity<UsuarioModel> pegarId(@PathVariable(value = "id_usuario") Long idUsuario) {
+		Optional<UsuarioModel> objetoOptional = repositorio.findById(idUsuario);
 
 		if (objetoOptional.isPresent()) {
 			return ResponseEntity.status(200).body(objetoOptional.get());
@@ -49,18 +50,18 @@ public class UsuarioControlador {
 	}
 
 	@PostMapping("/salvar")
-	public ResponseEntity<Usuario> salvar(@Valid @RequestBody Usuario novoUsuario) {
+	public ResponseEntity<UsuarioModel> salvar(@Valid @RequestBody UsuarioModel novoUsuario) {
 		return ResponseEntity.status(201).body(repositorio.save(novoUsuario));
 	}
 
 	@PutMapping("/atualizar")
-	public ResponseEntity<Usuario> atualizar(@Valid @RequestBody Usuario novoUsuario) {
+	public ResponseEntity<UsuarioModel> atualizar(@Valid @RequestBody UsuarioModel novoUsuario) {
 		return ResponseEntity.status(201).body(repositorio.save(novoUsuario));
 	}
 
 	@DeleteMapping("/deletar/{id_usuario}")
-	public ResponseEntity<Usuario> deletar(@PathVariable(value = "id_usuario") Long idUsuario) {
-		Optional<Usuario> objetoOptional = repositorio.findById(idUsuario);
+	public ResponseEntity<UsuarioModel> deletar(@PathVariable(value = "id_usuario") Long idUsuario) {
+		Optional<UsuarioModel> objetoOptional = repositorio.findById(idUsuario);
 
 		if (objetoOptional.isPresent()) {
 			repositorio.deleteById(idUsuario);
