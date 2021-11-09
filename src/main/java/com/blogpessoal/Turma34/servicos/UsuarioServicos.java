@@ -12,6 +12,9 @@ public class UsuarioServicos {
 
     private @Autowired UsuarioRepositorio repositorio;
 
+    /**
+     * Metodo utilizado para cadastrar usuario validando duplicidade de email no banco
+     */
     public Optional<?> cadastrarUsuario(UsuarioModelo usuarioParaCadastrar){
         return repositorio.findByEmail(usuarioParaCadastrar.getEmail()).map(usuarioExistente -> {
             return Optional.empty();
