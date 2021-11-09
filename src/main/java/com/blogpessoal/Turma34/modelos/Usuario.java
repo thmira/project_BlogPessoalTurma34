@@ -4,25 +4,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
- * 
  * Classe espelho da tabela usuario no banco db_blogpessoal
- * 
  */
 
 @Entity
 public class Usuario {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idUsuario;
-
-	private String nome;
-
-	private String email;
-
-	private String senha;
+	
+	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long idUsuario;
+	private @NotBlank String nome;
+	private @Email String email;
+	private @NotBlank @Size(min = 5, max= 30) String senha;
 
 	public Long getIdUsuario() {
 		return idUsuario;
