@@ -9,7 +9,7 @@ import java.util.List;
 
 
 /**
- *  Metodo utilizado para realizar pesquisa pela coluna tema na tabela tema
+ *  Metodo utilizado para realizar pesquisa pela coluna tema na tabela tema.
  */
 @Repository
 public interface TemaRepositorio extends JpaRepository<TemaModelo, Long>  {
